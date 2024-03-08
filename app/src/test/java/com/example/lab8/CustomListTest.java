@@ -3,6 +3,9 @@ package com.example.lab8;
 
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -36,5 +39,46 @@ public class CustomListTest{
         int listSize = list.getCount();
         list.addCity(new City("Estevan", "SK"));
         assertEquals(list.getCount(),listSize + 1);
+    }
+
+    @Test
+    public void deleteCityTest(){
+        list = mockCityList();
+        City city = new City("Edmonton", "Alberta");
+        list.addCity(city);
+        assertTrue(list.hasCity(city));
+        list.deleteCity(city);
+        assertFalse(list.hasCity(city));
+    }
+
+    @Test
+    void testDeleteException() {
+        list = mockCityList();
+        City city = new City("Yellowknife", "Northwest Territories");
+        assertThrows(IllegalArgumentException.class, () -> {
+            list.deleteCity(city);
+        });
+    }
+
+    @Test
+    void testHasCity() {
+        list = mockCityList();
+        City city = new City("Edmonton", "Alberta");
+        assertFalse(list.hasCity(city));
+        list.addCity(city);
+        assertTrue(list.hasCity(city));
+    }
+
+    @Test
+    void testCountCities() {
+        list = mockCityList();
+        assertEquals(list.getCount(), 0);
+
+        int expectedCount = 10;
+        for (int i=0; i<expectedCount; i++) {
+            list.addCity(new City("A", "B"));
+        }
+
+        assertEquals(list.getCount(), expectedCount);
     }
 }
