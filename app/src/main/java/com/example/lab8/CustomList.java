@@ -49,7 +49,7 @@ public class CustomList extends ArrayAdapter<City> {
      * @return length of list
      */
     public int getCount(){
-
+        return cities.size();
     }
 
     /**
@@ -68,7 +68,10 @@ public class CustomList extends ArrayAdapter<City> {
      * @throws IllegalArgumentException if City object not in the list
      */
     public void deleteCity(City city) throws IllegalArgumentException {
-
+        if (!cities.contains(city)) {
+            throw new IllegalArgumentException("City not found");
+        }
+        cities.remove(city);
     }
 
     /**
@@ -77,7 +80,7 @@ public class CustomList extends ArrayAdapter<City> {
      * @return boolean
      */
     public boolean hasCity(City city) {
-
+        return cities.contains(city);
     }
 
 
